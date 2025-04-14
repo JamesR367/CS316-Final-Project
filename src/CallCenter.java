@@ -1,8 +1,3 @@
-package Project3;
-
-/*
-    You can import any additional package here.
- */
 import java.util.concurrent.ThreadLocalRandom;
 import static java.lang.Thread.sleep;
 
