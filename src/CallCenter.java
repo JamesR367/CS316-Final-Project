@@ -8,7 +8,7 @@ public class CallCenter {
 
     private static final int NUMBER_OF_CUSTOMERS = NUMBER_OF_AGENTS * CUSTOMERS_PER_AGENT;
     private static final int NUMBER_OF_THREADS = 10;
-    private static Semaphore dataLock = new Semaphore(1);
+    private static Semaphore greeterLock = new Semaphore(1);
     private static Semaphore agentLock = new Semaphore(NUMBER_OF_AGENTS);
     private static Semaphore custemerPerAgentLock = new Semaphore(CUSTOMERS_PER_AGENT);
 
@@ -68,7 +68,7 @@ public class CallCenter {
     public static class Customer implements Runnable {
         public void run() {
             try {
-                dataLock.acquire();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
