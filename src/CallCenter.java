@@ -1,33 +1,18 @@
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.ThreadLocalRandom;
 import static java.lang.Thread.sleep;
 
 public class CallCenter {
-
-    /*
-       Total number of customers that each agent will serve in this simulation.
-       (Note that an agent can only serve one customer at a time.)
-     */
     private static final int CUSTOMERS_PER_AGENT = 5;
-
-    /*
-       Total number of agents.
-     */
     private static final int NUMBER_OF_AGENTS = 3;
 
-    /*
-       Total number of customers to create for this simulation.
-     */
     private static final int NUMBER_OF_CUSTOMERS = NUMBER_OF_AGENTS * CUSTOMERS_PER_AGENT;
-
-    /*
-      Number of threads to use for this simulation.
-     */
     private static final int NUMBER_OF_THREADS = 10;
+    private static Semaphore dataLock = new Semaphore(1);
+    private static Semaphore agentLock = new Semaphore(NUMBER_OF_AGENTS);
+    private static Semaphore custemerPerAgentLock = new Semaphore(CUSTOMERS_PER_AGENT);
 
 
-    /*
-       The Agent class.
-     */
     public static class Agent implements Runnable {
     //TODO: complete the agent class
         //The ID of the agent
@@ -81,14 +66,12 @@ public class CallCenter {
         The customer class.
      */
     public static class Customer implements Runnable {
-    //TODO: complete the Customer class
-        //The ID of the customer.
-        private final int ID;
-
-
-        //Feel free to modify the constructor
-        public Customer (int i){
-            ID = i;
+        public void run() {
+            try {
+                dataLock.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
